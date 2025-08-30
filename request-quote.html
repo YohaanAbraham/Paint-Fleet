@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request a Quote - PaintFleet</title>
+    <link rel="stylesheet" href="css/customer-dashboard.css">
+    <link rel="stylesheet" href="quote-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="customer-dashboard">
+        <header class="customer-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <img src="images/logo.png" alt="PaintFleet" class="logo">
+                    <nav>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="request-quote.html" class="active"><i class="fas fa-file-signature"></i> Get Quote</a>
+                        <a href="#"><i class="fas fa-comments"></i> Messages</a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="images/user-avatar.jpg" alt="User">
+                        <span>John D.</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="quote-request">
+            <div class="container">
+                <div class="quote-header">
+                    <h1><i class="fas fa-paint-roller"></i> Request a Painting Quote</h1>
+                    <p>Complete this form to receive a free estimate within 24 hours</p>
+                </div>
+
+                <form class="quote-form">
+                    <!-- Project Details -->
+                    <fieldset>
+                        <legend><i class="fas fa-clipboard-list"></i> Project Details</legend>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="project-type">Project Type*</label>
+                                <select id="project-type" required>
+                                    <option value="">Select...</option>
+                                    <option value="interior">Interior Painting</option>
+                                    <option value="exterior">Exterior Painting</option>
+                                    <option value="both">Both Interior & Exterior</option>
+                                    <option value="commercial">Commercial Painting</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="property-type">Property Type*</label>
+                                <select id="property-type" required>
+                                    <option value="">Select...</option>
+                                    <option value="house">Single Family Home</option>
+                                    <option value="apartment">Apartment/Condo</option>
+                                    <option value="office">Office/Business</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="rooms">Rooms/Areas*</label>
+                                <input type="number" id="rooms" min="1" placeholder="e.g. 3" required>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for="sqft">Approx. Square Footage*</label>
+                                <input type="number" id="sqft" min="100" placeholder="e.g. 1500" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="coats">Number of Coats*</label>
+                                <select id="coats" required>
+                                    <option value="">Select...</option>
+                                    <option value="1">1 Coat</option>
+                                    <option value="2">2 Coats</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="metro-area">Metropolitan Area*</label>
+                            <input type="text" id="metro-area" list="metro-suggestions" placeholder="e.g. New York City" required>
+                            <datalist id="metro-suggestions"></datalist>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="project-desc">Project Description</label>
+                            <textarea id="project-desc" rows="4" placeholder="Describe what needs to be painted, special requirements, etc."></textarea>
+                        </div>
+                    </fieldset>
+
+                    <!-- Timeline -->
+                    <fieldset>
+                        <legend><i class="fas fa-calendar-alt"></i> Timeline</legend>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="start-date">Desired Start Date*</label>
+                                <input type="date" id="start-date" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Urgency</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="urgency" value="flexible" checked> Flexible</label>
+                                    <label><input type="radio" name="urgency" value="soon"> Within 2 Weeks</label>
+                                    <label><input type="radio" name="urgency" value="urgent"> ASAP</label>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Contact Info -->
+                    <fieldset>
+                        <legend><i class="fas fa-user"></i> Contact Information</legend>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="name">Full Name*</label>
+                                <input type="text" id="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email*</label>
+                                <input type="email" id="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone*</label>
+                                <input type="tel" id="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="address">Property Address*</label>
+                                <input type="text" id="address" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Submission -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit Quote Request
+                        </button>
+                        <p class="disclaimer">We'll contact you within 24 hours to discuss your project.</p>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/metroCostTiers.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Populate metro suggestions
+        const metroInput = document.getElementById('metro-area');
+        const datalist = document.getElementById('metro-suggestions');
+        
+        // Create datalist options from metroCostTiers
+        for (const metro in metroCostTiers) {
+            if (metroCostTiers.hasOwnProperty(metro)) {
+                const option = document.createElement('option');
+                option.value = metro;
+                datalist.appendChild(option);
+            }
+        }
+
+        const quoteForm = document.querySelector('.quote-form');
+        const resultsContainer = document.createElement('div');
+        resultsContainer.className = 'quote-results';
+        quoteForm.parentNode.insertBefore(resultsContainer, quoteForm.nextSibling);
+
+        quoteForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            resultsContainer.innerHTML = '';
+            
+            // Validate form
+            const requiredFields = quoteForm.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--danger)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Collect data
+            const formData = {
+                rooms: parseInt(document.getElementById('rooms').value),
+                sqft: parseFloat(document.getElementById('sqft').value),
+                coats: parseInt(document.getElementById('coats').value),
+                metro: document.getElementById('metro-area').value.trim()
+            };
+
+            try {
+                // Calculate paint job cost
+                const BASE_RATE_PER_SQ_FT = 2.00;
+                const ROOM_FEE = 50;
+                const COAT_MULTIPLIER = 1.35;
+                const PAINT_COST_PER_GALLON = 40;
+                const PAINT_COVERAGE_PER_GALLON = 350;
+                const PRIMER_COST_PER_GALLON = 15;
+                const PRIMER_COVERAGE_PER_GALLON = 300;
+                const SUPPLIES_COST = 50;
+
+                // Validate inputs
+                if(formData.rooms < 0 || formData.sqft < 0 || ![1,2].includes(formData.coats)) {
+                    throw new Error("Invalid input values");
+                }
+
+                // Find metro tier
+                const metroInfo = metroCostTiers.findMetro(formData.metro);
+                if (!metroInfo) throw new Error("Metro area not found");
+
+                let metroMultiplier;
+                switch(metroInfo.tier) {
+                    case "High": metroMultiplier = 1.5; break;
+                    case "Medium": metroMultiplier = 1.25; break;
+                    case "Low": metroMultiplier = 1.0; break;
+                    default: throw new Error("Invalid metro tier");
+                }
+
+                // Calculate costs
+                const baseCost = formData.sqft * BASE_RATE_PER_SQ_FT;
+                const roomCost = formData.rooms * ROOM_FEE;
+                const coatAdjustment = formData.coats === 2 ? COAT_MULTIPLIER : 1;
+                const adjustedBase = baseCost * coatAdjustment;
+                const totalCustomer = (adjustedBase + roomCost) * metroMultiplier;
+                
+                const paintRequired = (formData.sqft * formData.coats) / PAINT_COVERAGE_PER_GALLON;
+                const primerRequired = formData.sqft / PRIMER_COVERAGE_PER_GALLON;
+                const internalCost = (paintRequired * PAINT_COST_PER_GALLON) + 
+                                   (primerRequired * PRIMER_COST_PER_GALLON) + 
+                                   SUPPLIES_COST;
+
+                const profit = totalCustomer - internalCost;
+                
+                const quote = {
+                    totalCustomer: +totalCustomer.toFixed(2),
+                    internalCost: +internalCost.toFixed(2),
+                    profit: +profit.toFixed(2),
+                    painterShare: +(profit * 0.7).toFixed(2),
+                    appShare: +(profit * 0.3).toFixed(2)
+                };
+
+                // Display results
+                resultsContainer.innerHTML = `
+                    <div class="quote-breakdown">
+                        <h3><i class="fas fa-file-invoice-dollar"></i> Instant Quote</h3>
+                        <div class="quote-item">
+                            <span>Total Project Cost:</span>
+                            <span>$${quote.totalCustomer}</span>
+                        </div>
+                        <div class="quote-item">
+                            <span>Materials & Labor:</span>
+                            <span>$${quote.internalCost}</span>
+                        </div>
+                        <div class="quote-item">
+                            <span>Your Estimated Earnings (70%):</span>
+                            <span>$${quote.painterShare}</span>
+                        </div>
+                        <div class="quote-note">
+                            Includes all materials and labor costs. Final price may vary after site inspection.
+                        </div>
+                        <button class="btn btn-confirm" onclick="this.disabled=true;alert('Quote officially submitted!')">
+                            <i class="fas fa-check-circle"></i> Confirm & Submit
+                        </button>
+                    </div>
+                `;
+
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+
+        // Real-time metro validation
+        metroInput.addEventListener('input', function() {
+            const currentVal = this.value.trim();
+            const validMetro = Object.keys(metroCostTiers.js).some(metro => 
+                metro.toLowerCase().includes(currentVal.toLowerCase()));
+            
+            this.style.borderColor = validMetro ? '#ddd' : 'var(--danger)';
+        });
+    });
+    </script>
+</body>
+</html>
