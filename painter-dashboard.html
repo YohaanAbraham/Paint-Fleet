@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painter Dashboard - PaintFleet</title>
+  <link rel="stylesheet" href="customer-dashboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="customer-dashboard">
+    <!-- Header -->
+    <header class="customer-header">
+      <div class="header-left">
+        <img src="paintfleetlogo.png" alt="PaintFleet" class="logo">
+        <nav>
+          <a href="#" class="active">Available Jobs</a>
+          <a href="#" class="hide-on-mobile">My Schedule</a>
+          <a href="#" class="hide-on-mobile">Earnings</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <div class="notification-icon hide-on-mobile">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </div>
+        <div class="user-profile">
+          <img src="icons8-user-50.png" alt="User">
+          <span>P.</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="customer-main">
+      <!-- Welcome Banner -->
+      <section class="welcome-banner">
+        <h1>Welcome back, Painter!</h1>
+        <p>Here are your available or assigned projects</p>
+      </section>
+
+      <!-- Available Projects -->
+      <section class="projects-section">
+        <h2><i class="fas fa-briefcase"></i> Available Projects</h2>
+        <div class="project-cards" id="pending-quote-projects">
+          <!-- Cards injected by JS -->
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-actions">
+        <h2><i class="fas fa-tools"></i> Quick Actions</h2>
+        <div class="action-grid">
+          <a href="#" class="action-card">
+            <i class="fas fa-check-circle"></i>
+            <span>Mark Job Complete</span>
+          </a>
+          <a href="#" class="action-card">
+            <i class="fas fa-route"></i>
+            <span>Start Route</span>
+          </a>
+          <a href="#" class="action-card">
+            <i class="fas fa-phone"></i>
+            <span>Contact Customer</span>
+          </a>
+          <a href="#" class="action-card">
+            <i class="fas fa-money-check"></i>
+            <span>Update Payment Status</span>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+<script src="painter-dashboard.js"></script>
+</html>
