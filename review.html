@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leave a Review - PaintFleet</title>
+  <link rel="stylesheet" href="css/customer-dashboard.css">
+  <link rel="stylesheet" href="quote-form.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="customer-dashboard">
+    <header class="customer-header">
+      <div class="header-container">
+        <div class="header-left">
+          <img src="images/logo.png" alt="PaintFleet" class="logo">
+          <nav>
+            <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="request-quote.html"><i class="fas fa-file-signature"></i> Get Quote</a>
+            <a href="#" class="active"><i class="fas fa-star"></i> Leave Review</a>
+          </nav>
+        </div>
+        <div class="header-right">
+          <div class="user-profile">
+            <img src="images/user-avatar.jpg" alt="User">
+            <span>John D.</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="quote-request">
+      <div class="container">
+        <div class="quote-header">
+          <h1><i class="fas fa-star"></i> Leave a Review</h1>
+          <p>Tell us about your experience with your painter!</p>
+        </div>
+
+        <form class="quote-form">
+          <fieldset>
+            <legend><i class="fas fa-user-check"></i> Painter Info</legend>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="painter-name">Painter Name*</label>
+                <input type="text" id="painter-name" required>
+              </div>
+              <div class="form-group">
+                <label for="job-date">Date of Job*</label>
+                <input type="date" id="job-date" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><i class="fas fa-comments"></i> Your Review</legend>
+            <div class="form-group full-width">
+              <label for="review-text">Comments*</label>
+              <textarea id="review-text" placeholder="How did it go?" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="rating">Rating*</label>
+              <select id="rating" required>
+                <option value="">Select Rating...</option>
+                <option value="5">★★★★★ - Excellent</option>
+                <option value="4">★★★★☆ - Good</option>
+                <option value="3">★★★☆☆ - Okay</option>
+                <option value="2">★★☆☆☆ - Poor</option>
+                <option value="1">★☆☆☆☆ - Terrible</option>
+              </select>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><i class="fas fa-user"></i> Your Info</legend>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="customer-name">Your Name*</label>
+                <input type="text" id="customer-name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email*</label>
+                <input type="email" id="email" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i> Submit Review
+            </button>
+            <p class="disclaimer">Your review helps other customers find great painters!</p>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
