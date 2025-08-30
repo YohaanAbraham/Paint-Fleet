@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painting Estimate | PaintFleet</title>
+    <link rel="stylesheet" href="css/customer-dashboard.css">
+    <link rel="stylesheet" href="quote-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .estimate-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        
+        .estimate-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .estimate-header h1 {
+            color: var(--primary);
+        }
+        
+        .estimate-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .estimate-section {
+            margin-bottom: 2rem;
+        }
+        
+        .estimate-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .estimate-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        
+        .estimate-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .estimate-breakdown {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .estimate-total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--primary);
+        }
+        
+        .estimate-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .no-estimate {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .estimate-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .estimate-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="customer-dashboard">
+        <header class="customer-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <img src="images/logo.png" alt="PaintFleet" class="logo">
+                    <nav>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="request-quote.html"><i class="fas fa-file-signature"></i> Get Quote</a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="images/user-avatar.jpg" alt="User">
+                        <span id="header-username">User</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="quote-request">
+            <div id="estimate-content" class="estimate-container">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const estimateContent = document.getElementById('estimate-content');
+        const estimateData = JSON.parse(sessionStorage.getItem('currentEstimate'));
+        
+        if (!estimateData) {
+            showNoEstimateMessage();
+            return;
+        }
+
+        const { formData, calculations } = estimateData;
+        
+        // Formatting functions
+        const formatCurrency = (amount) => 
+            `$${parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+        
+        const formatOption = (value, options) => 
+            options[value] || value || 'Not specified';
+        
+        const formatPhone = (phone) => {
+            if (!phone) return 'Not provided';
+            const cleaned = phone.replace(/\D/g, '');
+            if (cleaned.length === 10) {
+                return `(${cleaned.slice(0,3)}) ${cleaned.slice(3,6)}-${cleaned.slice(6)}`;
+            }
+            return phone;
+        };
+        
+        // Set username in header
+        document.getElementById('header-username').textContent = formData.name.split(' ')[0] || 'User';
+        
+        // Generate estimate content
+        estimateContent.innerHTML = `
+            <div class="estimate-header">
+                <h1><i class="fas fa-file-invoice-dollar"></i> Painting Estimate</h1>
+                <p>Valid until ${getValidUntilDate()}</p>
+            </div>
+            
+            <div class="estimate-meta">
+                <div><strong>Estimate #:</strong> ${calculations.estimateNumber}</div>
+                <div><strong>Date:</strong> ${new Date().toLocaleDateString()}</div>
+                <div><strong>Prepared For:</strong> ${formData.name}</div>
+            </div>
+            
+            <div class="estimate-section">
+                <h2><i class="fas fa-clipboard-list"></i> Project Details</h2>
+                <div class="estimate-grid">
+                    <div>
+                        <div class="estimate-item">
+                            <span>Project Type:</span>
+                            <span>${formatOption(formData.projectType, {
+                                'interior': 'Interior Painting',
+                                'exterior': 'Exterior Painting',
+                                'both': 'Interior & Exterior',
+                                'commercial': 'Commercial Painting'
+                            })}</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Property Type:</span>
+                            <span>${formatOption(formData.propertyType, {
+                                'house': 'Single Family Home',
+                                'apartment': 'Apartment/Condo',
+                                'office': 'Office/Business',
+                                'other': 'Other'
+                            })}</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Rooms/Areas:</span>
+                            <span>${formData.rooms}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="estimate-item">
+                            <span>Square Footage:</span>
+                            <span>${formData.sqft.toLocaleString()} sq ft</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Number of Coats:</span>
+                            <span>${formData.coats} coat${formData.coats > 1 ? 's' : ''}</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Metro Area:</span>
+                            <span>${formData.metro} (${calculations.tier} Tier)</span>
+                        </div>
+                    </div>
+                </div>
+                ${formData.description ? `
+                <div class="estimate-item">
+                    <span>Project Description:</span>
+                    <span>${formData.description}</span>
+                </div>
+                ` : ''}
+            </div>
+            
+            <div class="estimate-section">
+                <h2><i class="fas fa-calculator"></i> Cost Breakdown</h2>
+                <div class="estimate-breakdown">
+                    <div class="estimate-item">
+                        <span>Base Painting Cost (${formData.sqft} sq ft × $${calculations.baseCost/formData.sqft}/sq ft):</span>
+                        <span>${formatCurrency(calculations.baseCost)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Room/Area Fee (${formData.rooms} × $${calculations.roomCost/formData.rooms}):</span>
+                        <span>${formatCurrency(calculations.roomCost)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Coat Multiplier (${formData.coats} coat${formData.coats > 1 ? 's' : ''}):</span>
+                        <span>×${calculations.coatAdjustment.toFixed(2)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Metro Area Adjustment (${calculations.tier} Tier):</span>
+                        <span>×${calculations.metroMultiplier.toFixed(2)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Materials & Supplies:</span>
+                        <span>${formatCurrency(calculations.materialCosts)}</span>
+                    </div>
+                    <div class="estimate-total">
+                        <span>Total Project Cost:</span>
+                        <span>${formatCurrency(calculations.totalToCustomer)}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="estimate-section">
+                <h2><i class="fas fa-money-bill-wave"></i> Earnings Breakdown</h2>
+                <div class="estimate-breakdown">
+                    <div class="estimate-item">
+                        <span>Total Revenue:</span>
+                        <span>${formatCurrency(calculations.totalToCustomer)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Material Costs:</span>
+                        <span>-${formatCurrency(calculations.materialCosts)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Gross Profit:</span>
+                        <span>${formatCurrency(calculations.profit)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Your Earnings (70%):</span>
+                        <span>${formatCurrency(calculations.painterShare)}</span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Platform Fee (30%):</span>
+                        <span>${formatCurrency(calculations.appShare)}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="estimate-section">
+                <h2><i class="fas fa-user"></i> Customer Information</h2>
+                <div class="estimate-grid">
+                    <div>
+                        <div class="estimate-item">
+                            <span>Name:</span>
+                            <span>${formData.name}</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Email:</span>
+                            <span>${formData.email}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="estimate-item">
+                            <span>Phone:</span>
+                            <span>${formatPhone(formData.phone)}</span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Property Address:</span>
+                            <span>${formData.address}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="estimate-grid">
+                    <div>
+                        <div class="estimate-item">
+                            <span>Desired Start Date:</span>
+                            <span>${formData.startDate ? new Date(formData.startDate).toLocaleDateString() : 'Flexible'}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="estimate-item">
+                            <span>Urgency:</span>
+                            <span>${formatOption(formData.urgency, {
+                                'flexible': 'Flexible',
+                                'soon': 'Within 2 Weeks',
+                                'urgent': 'ASAP'
+                            })}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="estimate-actions">
+                <button class="btn btn-primary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Estimate
+                </button>
+                <a href="request-quote.html" class="btn btn-outline">
+                    <i class="fas fa-file-signature"></i> Create New Quote
+                </a>
+                <a href="dashboard.html" class="btn btn-outline">
+                    <i class="fas fa-tachometer-alt"></i> Return to Dashboard
+                </a>
+            </div>
+            
+            <div class="estimate-notes">
+                <p><small>Notes: This estimate is valid for 30 days. Final pricing may vary based on site inspection. 
+                PaintFleet guarantees quality workmanship and materials.</small></p>
+            </div>
+        `;
+        
+        function getValidUntilDate() {
+            const date = new Date();
+            date.setDate(date.getDate() + 30);
+            return date.toLocaleDateString();
+        }
+        
+        function showNoEstimateMessage() {
+            estimateContent.innerHTML = `
+                <div class="no-estimate">
+                    <h2><i class="fas fa-exclamation-circle"></i> No Estimate Found</h2>
+                    <p>Please submit a quote request to generate an estimate.</p>
+                    <div class="estimate-actions">
+                        <a href="request-quote.html" class="btn btn-primary">
+                            <i class="fas fa-arrow-left"></i> Back to Quote Form
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+    });
+    </script>
+</body>
+</html>
