@@ -1,0 +1,308 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #3498db;
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items:center;
+    padding: 1rem 5%;
+  
+    
+    color: black;
+    background-color:#58E7F6;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    
+}
+/* Add these logo styles */
+.logo-img {
+    height: 60px; /* Adjust based on your logo's proportions */
+    width: auto;
+    border-radius: 20%;
+    transition: transform 0.3s ease;
+    margin-right: 1rem;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Update the navbar padding if needed */
+.navbar {
+    padding: 0.5rem 5%; /* Reduced from 1rem to accommodate logo */
+    /* ... keep other existing navbar styles ... */
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    
+}
+
+.nav-links a {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: burlywood;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Background images */
+/* Proper background syntax for hero section */
+.hero {
+    height: 100vh;
+    background-color: #000; /* Fallback color */
+    background-image: url('landingpainter.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed; /* Optional for parallax effect */
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+    color: black;
+    text-align: center;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.hero .btn {
+    width: auto;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    display: inline-block;
+}
+
+/* Make sure your navbar stays on top */
+.navbar {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+}
+
+/* Make sure your navbar stays on top */
+.navbar {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+}
+
+/* Auth Container */
+.auth-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f5f6fa 0%, #dcdde1 100%);
+    padding: 2rem;
+}
+
+.auth-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-form h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #c0392b;
+}
+
+.toggle-form {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.toggle-form a {
+    color: var(--accent-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.toggle-form a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .auth-container {
+        padding: 1rem;
+    }
+    /* Mobile responsive adjustments */
+
+    .logo-img {
+        height: 40px; /* Slightly smaller for mobile */
+    }
+    /* Auth Error Styles */
+    .auth-error {
+        color: var(--secondary-color);
+        margin-top: 1rem;
+        text-align: center;
+        padding: 0.5rem;
+        background-color: rgba(231, 76, 60, 0.1);
+        border-radius: 5px;
+    }
+
+    /* User Profile Dropdown */
+    .user-profile {
+        position: relative;
+    }
+
+    .logout-btn {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-radius: 5px;
+        width: 120px;
+        text-align: center;
+        z-index: 100;
+    }
+
+    .user-profile:hover .logout-btn {
+        display: block;
+    }
+
+    /* Form Improvements */
+    .auth-form input {
+        transition: border 0.3s;
+    }
+
+    .auth-form input:focus {
+        border-color: var(--accent-color);
+        outline: none;
+    }
+
+    /* Loading State */
+    .btn-loading {
+        position: relative;
+        pointer-events: none;
+    }
+
+    .btn-loading::after {
+        content: '';
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1rem;
+        height: 1rem;
+        border: 2px solid rgba(255,255,255,0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: translateY(-50%) rotate(360deg); }
+    }
+    
+
+}
