@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Painting Estimate | PaintFleet</title>
+    <link rel="stylesheet" href="css/customer-dashboard.css">
+    <link rel="stylesheet" href="quote-form.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .estimate-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .estimate-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .estimate-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .estimate-breakdown {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .estimate-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .estimate-total {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-top: 1.5rem;
+        }
+        
+        .estimate-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .estimate-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="customer-dashboard">
+        <header class="customer-header">
+            <div class="header-container">
+                <div class="header-left">
+                    <img src="images/logo.png" alt="PaintFleet" class="logo">
+                    <nav>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                        <a href="request-quote.html"><i class="fas fa-file-signature"></i> Get Quote</a>
+                    </nav>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <img src="images/user-avatar.jpg" alt="User">
+                        <span>John D.</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="quote-request">
+            <div class="estimate-container">
+                <div class="estimate-header">
+                    <h1><i class="fas fa-file-invoice-dollar"></i> Your Painting Estimate</h1>
+                    <p>Valid for 30 days | Estimate #<span id="estimate-number">PF-<span id="estimate-id"></span></span></p>
+                </div>
+                
+                <div class="estimate-details">
+                    <div>
+                        <h3><i class="fas fa-info-circle"></i> Project Details</h3>
+                        <div class="estimate-item">
+                            <span>Project Type:</span>
+                            <span id="project-type"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Property Type:</span>
+                            <span id="property-type"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Rooms/Areas:</span>
+                            <span id="rooms"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Square Footage:</span>
+                            <span id="sqft"></span> sq ft
+                        </div>
+                        <div class="estimate-item">
+                            <span>Metro Area:</span>
+                            <span id="metro-area"></span>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3><i class="fas fa-user"></i> Contact Information</h3>
+                        <div class="estimate-item">
+                            <span>Name:</span>
+                            <span id="customer-name"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Email:</span>
+                            <span id="customer-email"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Phone:</span>
+                            <span id="customer-phone"></span>
+                        </div>
+                        <div class="estimate-item">
+                            <span>Address:</span>
+                            <span id="customer-address"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="estimate-breakdown">
+                    <h3><i class="fas fa-calculator"></i> Cost Breakdown</h3>
+                    
+                    <div class="estimate-item">
+                        <span>Base Painting Cost:</span>
+                        <span id="base-cost"></span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Rooms/Areas Fee:</span>
+                        <span id="room-fee"></span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Coat Multiplier:</span>
+                        <span id="coat-multiplier"></span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Metro Area Adjustment:</span>
+                        <span id="metro-multiplier"></span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Materials & Supplies:</span>
+                        <span id="materials-cost"></span>
+                    </div>
+                    
+                    <div class="estimate-total">
+                        <span>Total Project Cost:</span>
+                        <span id="total-cost"></span>
+                    </div>
+                </div>
+                
+                <div class="estimate-breakdown">
+                    <h3><i class="fas fa-money-bill-wave"></i> Earnings Breakdown</h3>
+                    
+                    <div class="estimate-item">
+                        <span>Your Share (70%):</span>
+                        <span id="painter-share"></span>
+                    </div>
+                    <div class="estimate-item">
+                        <span>Platform Fee (30%):</span>
+                        <span id="platform-fee"></span>
+                    </div>
+                </div>
+                
+                <div class="estimate-actions">
+                    <button class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print Estimate
+                    </button>
+                    <a href="dashboard.html" class="btn btn-outline">
+                        <i class="fas fa-tachometer-alt"></i> Return to Dashboard
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get estimate data from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Generate random estimate ID if not provided
+        const estimateId = urlParams.get('id') || Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('estimate-id').textContent = estimateId;
+        
+        // Format today's date
+        const today = new Date();
+        const validUntil = new Date();
+        validUntil.setDate(today.getDate() + 30);
+        
+        // Display estimate data
+        if (urlParams.toString()) {
+            // Project Details
+            document.getElementById('project-type').textContent = 
+                urlParams.get('projectType') || 'Interior Painting';
+            document.getElementById('property-type').textContent = 
+                urlParams.get('propertyType') || 'Single Family Home';
+            document.getElementById('rooms').textContent = 
+                urlParams.get('rooms') || '3';
+            document.getElementById('sqft').textContent = 
+                urlParams.get('sqft') || '1500';
+            document.getElementById('metro-area').textContent = 
+                urlParams.get('metro') || 'New York-Northern New Jersey-Long Island, NY-NJ-PA';
+            
+            // Contact Info
+            document.getElementById('customer-name').textContent = 
+                urlParams.get('name') || 'John Doe';
+            document.getElementById('customer-email').textContent = 
+                urlParams.get('email') || 'john@example.com';
+            document.getElementById('customer-phone').textContent = 
+                urlParams.get('phone') || '(555) 123-4567';
+            document.getElementById('customer-address').textContent = 
+                urlParams.get('address') || '123 Main St, Anytown, USA';
+            
+            // Cost Breakdown
+            document.getElementById('base-cost').textContent = 
+                formatCurrency(urlParams.get('baseCost') || 3000);
+            document.getElementById('room-fee').textContent = 
+                formatCurrency(urlParams.get('roomFee') || 150);
+            document.getElementById('coat-multiplier').textContent = 
+                urlParams.get('coats') === '2' ? '2 Coats (x1.35)' : '1 Coat (x1.0)';
+            document.getElementById('metro-multiplier').textContent = 
+                getMetroMultiplierText(urlParams.get('metro'));
+            document.getElementById('materials-cost').textContent = 
+                formatCurrency(urlParams.get('materialsCost') || 450);
+            document.getElementById('total-cost').textContent = 
+                formatCurrency(urlParams.get('totalCost') || 3600);
+            
+            // Earnings Breakdown
+            document.getElementById('painter-share').textContent = 
+                formatCurrency(urlParams.get('painterShare') || 2205);
+            document.getElementById('platform-fee').textContent = 
+                formatCurrency(urlParams.get('platformFee') || 945);
+        } else {
+            // Demo data if no parameters (for testing)
+            loadSampleData();
+        }
+        
+        function formatCurrency(amount) {
+            return '$' + parseFloat(amount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        function getMetroMultiplierText(metro) {
+            if (!metro) return 'Standard (x1.0)';
+            const tier = metroCostTiers[metro] || 'Low';
+            return `${tier} Tier (x${tier === 'High' ? 1.5 : tier === 'Medium' ? 1.25 : 1.0})`;
+        }
+        
+        function loadSampleData() {
+            // This is just for demonstration
+            document.getElementById('project-type').textContent = 'Interior Painting';
+            document.getElementById('property-type').textContent = 'Single Family Home';
+            document.getElementById('rooms').textContent = '3';
+            document.getElementById('sqft').textContent = '1500';
+            document.getElementById('metro-area').textContent = 'New York-Northern New Jersey-Long Island, NY-NJ-PA';
+            
+            document.getElementById('customer-name').textContent = 'John Doe';
+            document.getElementById('customer-email').textContent = 'john@example.com';
+            document.getElementById('customer-phone').textContent = '(555) 123-4567';
+            document.getElementById('customer-address').textContent = '123 Main St, Anytown, USA';
+            
+            document.getElementById('base-cost').textContent = '$3,000.00';
+            document.getElementById('room-fee').textContent = '$150.00';
+            document.getElementById('coat-multiplier').textContent = '2 Coats (x1.35)';
+            document.getElementById('metro-multiplier').textContent = 'High Tier (x1.5)';
+            document.getElementById('materials-cost').textContent = '$450.00';
+            document.getElementById('total-cost').textContent = '$3,600.00';
+            
+            document.getElementById('painter-share').textContent = '$2,205.00';
+            document.getElementById('platform-fee').textContent = '$945.00';
+        }
+    });
+    </script>
+</body>
+</html>
