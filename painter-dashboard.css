@@ -1,0 +1,64 @@
+/* painter-dashboard.css */
+
+@import url('customer-dashboard.css');
+
+:root {
+    --painter-primary: #2A8B5C;
+    --painter-accent: #1D976C;
+}
+
+/* Override banner colors for painters */
+.welcome-banner {
+    background: linear-gradient(135deg, var(--painter-primary), var(--painter-accent));
+    color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+/* Adjust quick actions */
+.quick-actions .action-card {
+    color: var(--painter-primary);
+}
+
+.quick-actions .action-card:hover {
+    background-color: var(--painter-primary);
+    color: white;
+}
+
+/* Painter-specific status styles */
+.status.available {
+    background-color: #fff4e5;
+    color: var(--painter-primary);
+}
+
+.status.assigned {
+    background-color: #e0f7f1;
+    color: var(--painter-accent);
+}
+
+/* Emphasize job action buttons */
+.project-actions .btn-primary {
+    background-color: var(--painter-primary);
+    color: white;
+}
+
+.project-actions .btn-primary:hover {
+    background-color: var(--painter-accent);
+    transform: translateY(-2px);
+}
+
+.project-actions .btn-outline {
+    border-color: var(--painter-primary);
+    color: var(--painter-primary);
+}
+
+.project-actions .btn-outline:hover {
+    background-color: rgba(42, 139, 92, 0.1);
+}
+
+@media (max-width: 768px) {
+    .btn {
+        min-width: 100%;
+    }
+}
